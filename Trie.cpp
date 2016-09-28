@@ -28,14 +28,14 @@ tirenode& newnode(int value)
    return temp;
 }
 
-bool FindFromCurNode(tirenode *p,int id,tirenode &tnode)
+bool FindFromCurNode(tirenode *p,int id,tirenode *&tnode)
 {
    set<struct tirenode>::iterator iter;
    for(iter=p->tnode_set.begin();iter!=p->tnode_set.end();iter++)
    {
        if((*iter).value == id)
            {
-               tnode=*iter;
+               tnode=const_cast<struct tirenode *>(&(*iter));
                return true;
            }
    }
@@ -45,11 +45,11 @@ bool Search(tirenode &temp,char *ch)
 {
    bool Flag = false;
    int id;
-   tirenode pTemp;
+   tirenode *pTemp;
    tirenode* p=&temp;
    while(*ch)
    {
-    id=*ch-'0';
+    id=*ch;
     /*if(p->isStr == true)
     {
       cout<<"find it "<<endl;
@@ -57,13 +57,14 @@ bool Search(tirenode &temp,char *ch)
     }*/
     if(!FindFromCurNode(p,id,pTemp))
     {
-      cout<<"not find it:"<<id<<endl;
+      cout<<"not find it:"<<(char)id<<endl;
       break;
     }
     else
     {
-        p=&pTemp;
-        cout<<"search:"<<p->value<<endl;
+        p=pTemp;
+        cout<<"search:"<<(char)p->value<<endl;
+
     }
        ch++;
    }
@@ -75,10 +76,10 @@ void Insert(tirenode &temp,char *ch)
    int id;
    set<struct tirenode>::iterator iter;
   tirenode *p=&temp;
-   tirenode tnode,tde;
+   tirenode *tnode,tde;
    while(*ch)
    {
-        id=*ch-'0';
+        id=*ch;
         if(!FindFromCurNode(p,id,tnode))
         {
             tde = newnode(id);
@@ -89,7 +90,7 @@ void Insert(tirenode &temp,char *ch)
            //Find it exit node
         }
         else
-            p = &tnode;
+            p = tnode;
         ch++;
    }
    p->isStr=true;
