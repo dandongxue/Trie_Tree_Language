@@ -1,54 +1,101 @@
 #include<iostream>
+#include <set>
 using namespace std;
 struct tirenode{
-				struct tirenode *next[2];//只有01两种情况所以就设置了两个子节点
-				bool isStr;
+                set<struct tirenode> tnode_set;
+                bool isStr;
+                int value;
+                int type;
 				};
-char str[20];
-bool flag;
-tirenode* newnode()
+bool operator<(const tirenode & lhs, const tirenode & rhs)
 {
-   tirenode *temp=new tirenode;
-   for(int m=0;m<2;m++)
-        temp->next[m]=NULL;
-   temp->isStr=false;//标记位记录二叉树到这个节点是否构成了一个字符串，搜索是否需要终止
+    return lhs.value<rhs.value;
+}
+tirenode& newnode()
+{
+   static tirenode temp;
+   temp.type=-1;
+   temp.value=0;
+   temp.isStr=false;//标记位记录二叉树到这个节点是否构成了一个字符串，搜索是否需要终止
    return temp;
 }
-bool Search(tirenode *p,char *ch)
+tirenode& newnode(int value)
 {
-   bool Fla=false;
+   static tirenode temp;
+   temp.type=-1;
+   temp.value=value;
+   temp.isStr=false;//标记位记录二叉树到这个节点是否构成了一个字符串，搜索是否需要终止
+   return temp;
+}
+
+bool FindFromCurNode(tirenode *p,int id,tirenode &tnode)
+{
+   set<struct tirenode>::iterator iter;
+   for(iter=p->tnode_set.begin();iter!=p->tnode_set.end();iter++)
+   {
+       if((*iter).value == id)
+           {
+               tnode=*iter;
+               return true;
+           }
+   }
+    return false;
+}
+bool Search(tirenode &temp,char *ch)
+{
+   bool Flag = false;
    int id;
+   tirenode pTemp;
+   tirenode* p=&temp;
    while(*ch)
    {
     id=*ch-'0';
-    if(p->isStr==true)
+    /*if(p->isStr == true)
     {
-     //cout<<"find it"<<endl;
+      cout<<"find it "<<endl;
+      break;
+    }*/
+    if(!FindFromCurNode(p,id,pTemp))
+    {
+      cout<<"not find it:"<<id<<endl;
       break;
     }
-    if(p->next[id]==NULL)
+    else
     {
-      Fla=true;//true ,not findit;
-        break;
+        p=&pTemp;
+        cout<<"search:"<<p->value<<endl;
     }
-    else p=p->next[id];
        ch++;
    }
-return Fla;
+return Flag;
 }
-void Insert(tirenode *p,char *ch)
+
+void Insert(tirenode &temp,char *ch)
 {
    int id;
+   set<struct tirenode>::iterator iter;
+  tirenode *p=&temp;
+   tirenode tnode,tde;
    while(*ch)
    {
-    id=*ch-'0';
-    if(p->next[id]==NULL)
-    p->next[id]=newnode();
-    p=p->next[id];
-    ch++;
+        id=*ch-'0';
+        if(!FindFromCurNode(p,id,tnode))
+        {
+            tde = newnode(id);
+            (p->tnode_set).insert(tde);
+            iter=(p->tnode_set).find(tde);
+            p = const_cast<struct tirenode *>(&(*iter));
+            cout<<"Insert "<<*ch<<endl;
+           //Find it exit node
+        }
+        else
+            p = &tnode;
+        ch++;
    }
    p->isStr=true;
 }
+
+/*
 void Del(tirenode *p)
 {
   int i;
@@ -58,32 +105,14 @@ void Del(tirenode *p)
        Del(p->next[i]);
   }
 free(p);
-}
+}*/
 int main(){
 	int count=1;
-	tirenode *root=newnode();
-	flag=true;
-	while(scanf("%s",str)!=EOF)
-	{
-	   if(str[0]=='9')
-	   {
-			if(flag)
-			   printf("Set %d is immediately decodable\n",count++);
-			else
-			   printf("Set %d is not immediately decodable\n",count++);
-			Del(root);
-			tirenode *root=newnode();
-			flag=true;
-			continue;
-		   // break;
-	   }
-	   else if(flag)
-	   {
-		 if(Search(root,str))
-			Insert(root,str);
-		 else
-			 flag=false;//fing bug;
-	   }
-	}
+	tirenode root=newnode();
+	Insert(root,"xkt");
+	Insert(root,"xkty");
+	cout<<"================="<<endl;
+    cout<<Search(root,"xktu")<<endl;
+	bool flag=true;
 	return 0;
 }
