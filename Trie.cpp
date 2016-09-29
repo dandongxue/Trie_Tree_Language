@@ -1,11 +1,13 @@
 #include<iostream>
 #include <set>
+#include <utility>
 using namespace std;
 struct TrieNode{
                 set<struct TrieNode> tnode_set;
                 bool isStr;
                 int tnode_value;
                 int tnode_type;
+
 				};
 bool operator<(const TrieNode & lhs, const TrieNode & rhs)//over load operator '<' for set
 {
@@ -57,13 +59,13 @@ bool SearchNode(TrieNode &temp,char *ch)
     }*/
     if(!FindFromCurNode(p,id,pTemp))
     {
-      cout<<"not find it:"<<(char)id<<endl;
+      cout<<"not find it:"<<(char *)&id<<endl;
       break;
     }
     else
     {
         p=pTemp;
-        cout<<"search:"<<(char)p->tnode_value<<endl;
+        cout<<"search:"<<(char *)&p->tnode_value<<endl;
 
     }
        ch++;
@@ -75,22 +77,12 @@ void InsertNode(TrieNode &temp,char *ch)
 {
    int id;
    set<struct TrieNode>::iterator iter;
-  TrieNode *p=&temp;
+   TrieNode *p=&temp;
    TrieNode *tnode,tde;
    while(*ch)
    {
         id=*ch;
-        if(!FindFromCurNode(p,id,tnode))
-        {
-            tde = CreateNode(id);
-            (p->tnode_set).insert(tde);
-            iter=(p->tnode_set).find(tde);
-            p = const_cast<struct TrieNode *>(&(*iter));
-            cout<<"InsertNode "<<*ch<<endl;
-           //Find it exit node
-        }
-        else
-            p = tnode;
+        p=const_cast<struct TrieNode *>(& (*get<0> (p->tnode_set.insert(CreateNode(id)))));
         ch++;
    }
    p->isStr=true;
@@ -100,7 +92,7 @@ void DisplayTree(const TrieNode *p,unsigned int curlevel) //Print the tree on th
     //if(curlevel!=0)cout<<curlevel;
     for(int i=0;i<curlevel;i++)
         cout<<"-";
-    cout <<(char)p->tnode_value << " "<<endl;
+    cout <<(char *)&p->tnode_value << " "<<endl;
     set<struct TrieNode>::iterator iter;
     for(iter=p->tnode_set.begin();iter!=p->tnode_set.end();iter++)
     {
@@ -111,7 +103,7 @@ void DisplayTree(const TrieNode *p,unsigned int curlevel) //Print the tree on th
 int main(){
 	int count=1;
 	TrieNode root=CreateNode();
-	InsertNode(root,"xdfdktt");
+	//InsertNode(root,"ÐØ¿ÚÌÛÍ´");
 	InsertNode(root,"xdfduyy");
 	InsertNode(root,"zbty");
 	InsertNode(root,"yjty");
@@ -119,5 +111,6 @@ int main(){
     cout<<SearchNode(root,"xktu")<<endl;
     DisplayTree(&root,0);
 	bool flag=true;
+
 	return 0;
 }
