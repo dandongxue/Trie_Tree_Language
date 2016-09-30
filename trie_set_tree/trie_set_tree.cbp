@@ -32,7 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="../main.cc" />
+		<Unit filename="../trie_set_tree.cc" />
+		<Unit filename="../trie_set_tree.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -2,65 +2,56 @@
 
 namespace trietree {
 
-void TrieTree::Add(const char * values, const string & slot)
+string trim(const string& str)
 {
-    const char *ch = values;
-    _curSet = &_rootSet;
-    while (true)
+    string::size_type pos = str.find_first_not_of(' ');
+    if (pos == string::npos)
     {
-        if (!*(ch + 1))
-            break;
-        
-        _curSet = _insert(CharUnit(*ch));
-        ch++;
+        return str;
     }
-    _insert(CharUnit(*ch, slot));
-    _curSet = &_rootSet;
+    string::size_type pos2 = str.find_last_not_of(' ');
+    if (pos2 != string::npos)
+    {
+        return str.substr(pos, pos2 - pos + 1);
+    }
+    return str.substr(pos);
 }
 
-
-pair<string, string> TrieTree::Translate(const string sentence)
+int split(const string& str, vector<string>& ret_, string sep)
 {
-    _curSet = &_rootSet;
-    const char *ch = sentence.data();
-    string result = "";
-    string slots = "";
-    string last_values = "";
-    string last_slot = "";
-    
-    while (*ch)
+    if (str.empty())
     {
-        pair<set<CharUnit> *, string> piece_result = _find(CharUnit(*ch));
-        set<CharUnit> * nextSet = piece_result.first;
-        string curSlot = piece_result.second;
-        
-        if (NULL != nextSet) {
-            last_values += *ch;
-            if (!curSlot.empty())
-                last_slot = curSlot;
-            _curSet = nextSet;
+        return 0;
+    }
+
+    string tmp;
+    string::size_type pos_begin = str.find_first_not_of(sep);
+    string::size_type comma_pos = 0;
+
+    while (pos_begin != string::npos)
+    {
+        comma_pos = str.find(sep, pos_begin);
+        if (comma_pos != string::npos)
+        {
+            tmp = str.substr(pos_begin, comma_pos - pos_begin);
+            pos_begin = comma_pos + sep.length();
         }
         else
         {
-            _curSet = &_rootSet;
-            if (!last_slot.empty()) {
-                result += last_values + ':' + last_slot + " ";
-                slots += last_slot + " ";
-                last_values = "";
-                last_slot = "";
-                continue;
-            }
+            tmp = str.substr(pos_begin);
+            pos_begin = comma_pos;
         }
-        ch++;
+
+        if (!tmp.empty())
+        {
+            ret_.push_back(tmp);
+            tmp.clear();
+        }
     }
-    
-    if (!last_slot.empty()) {
-        result += last_values + ':' + last_slot;
-        slots += last_slot;
-    }
-    
-    return pair<string, string>(result, slots);
+    return 0;
 }
+
+// TrieTree implement begin
 
 set<CharUnit> * TrieTree::_insert(const CharUnit & charUnit)
 {
@@ -83,5 +74,150 @@ CharUnit * TrieTree::_cast2var(const set<CharUnit>::iterator & iter)
 {
     return const_cast<CharUnit *>(&(*iter));
 }
+
+// TrieTree implement end
+
+// SlotTree implement begin
+
+void SlotTree::Add(const string values, const string & slot)
+{
+    const char *ch = values.data();
+    string tempStr;
+    _curSet = &_rootSet;
+    while (true)
+    {
+        tempStr = *ch;
+        if (!*(ch + 1))
+            break;
+
+        _curSet = _insert(CharUnit(tempStr));
+        ch++;
+    }
+    _insert(CharUnit(tempStr, slot));
+    _curSet = &_rootSet;
+}
+
+
+pair<string, string> SlotTree::Translate(const string sentence)
+{
+    _curSet = &_rootSet;
+    const char *ch = sentence.data();
+    string tempStr;
+    string result = "";
+    string slots = "";
+    string last_values = "";
+    string last_slot = "";
+
+    while (*ch)
+    {
+        tempStr = *ch;
+        pair<set<CharUnit> *, string> piece_result = _find(CharUnit(tempStr));
+        set<CharUnit> * nextSet = piece_result.first;
+        string curSlot = piece_result.second;
+
+        if (NULL != nextSet) {
+            last_values += tempStr;
+            if (!curSlot.empty())
+                last_slot = curSlot;
+            _curSet = nextSet;
+        }
+        else
+        {
+            _curSet = &_rootSet;
+            if (!last_slot.empty()) {
+                result += last_values + last_slot + " ";
+                slots += last_slot;
+                last_values = "";
+                last_slot = "";
+                continue;
+            }
+            else{
+                last_values = "";
+                last_slot = "";
+            }
+        }
+        ch++;
+    }
+
+    if (!last_slot.empty()) {
+        result += last_values + ':' + last_slot;
+        slots += last_slot;
+    }
+
+    return pair<string, string>(trim(result), trim(slots));
+}
+
+// SlotTree implement end
+
+// IntentTree implement begin
+
+void IntentTree::Add(const string values, const string & slot)
+{
+    const char *ch = values.data();
+    string tempStr;
+    _curSet = &_rootSet;
+    while (true)
+    {
+        tempStr = *ch;
+        if (!*(ch + 1))
+            break;
+
+        _curSet = _insert(CharUnit(tempStr));
+        ch++;
+    }
+    _insert(CharUnit(tempStr, slot));
+    _curSet = &_rootSet;
+}
+
+pair<string, string> IntentTree::Translate(const string sentence)
+{
+    _curSet = &_rootSet;
+    const char *ch = sentence.data();
+    string tempStr;
+    string result = "";
+    string slots = "";
+    string last_values = "";
+    string last_slot = "";
+
+    while (*ch)
+    {
+        tempStr = *ch;
+        pair<set<CharUnit> *, string> piece_result = _find(CharUnit(tempStr));
+        set<CharUnit> * nextSet = piece_result.first;
+        string curSlot = piece_result.second;
+
+        if (NULL != nextSet) {
+            last_values += tempStr;
+            if (!curSlot.empty())
+                last_slot = curSlot;
+            _curSet = nextSet;
+        }
+        else
+        {
+            _curSet = &_rootSet;
+            if (!last_slot.empty()) {
+                result += last_values + last_slot + " ";
+                slots += last_slot;
+                last_values = "";
+                last_slot = "";
+                continue;
+            }
+            else{
+                last_values = "";
+                last_slot = "";
+            }
+        }
+        ch++;
+    }
+
+    if (!last_slot.empty()) {
+        result += last_values + ':' + last_slot;
+        slots += last_slot;
+    }
+
+    return pair<string, string>(trim(result), trim(slots));
+}
+
+// IntentTree implement end
 
 }

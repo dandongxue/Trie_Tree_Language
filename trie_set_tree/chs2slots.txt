@@ -1,0 +1,14 @@
+abc	:english1
+def	:english2
+智齿	:body
+腰	:body
+腿	:body
+脚	:body
+软	:feel
+酸	:feel
+疼	:feel
+痛	:feel
+肺衰竭	:dease
+哈喽	:hi
+问你个问题	:ask
+小心我揍你	:threat
