@@ -9,6 +9,7 @@ def	:english2
 疼	:feel
 痛	:feel
 肺衰竭	:dease
+你好	:hi
 哈喽	:hi
 问你个问题	:ask
 小心我揍你	:threat

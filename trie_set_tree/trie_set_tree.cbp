@@ -35,6 +35,8 @@
 		<Unit filename="../main.cc" />
 		<Unit filename="../trie_set_tree.cc" />
 		<Unit filename="../trie_set_tree.h" />
+		<Unit filename="chs2slots.txt" />
+		<Unit filename="slots2intent.txt" />
 		<Extensions>
 			<code_completion />
 			<envvars />

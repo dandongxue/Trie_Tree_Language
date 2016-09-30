@@ -1,4 +1,4 @@
 :english1 :english2 ::English
 :body :feel ::Symptom
 :body :dease ::Illness
-:ask :threat :hehe ::Conflict
+:hi :threat ::Conflict

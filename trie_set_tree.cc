@@ -126,12 +126,17 @@ pair<string, string> SlotTree::Translate(const string sentence)
             _curSet = &_rootSet;
             if (!last_slot.empty()) {
                 result += last_values + last_slot + " ";
-                slots += last_slot;
+                slots += last_slot + " ";
                 last_values = "";
                 last_slot = "";
                 continue;
             }
             else{
+                if (!last_values.empty()) {
+                    last_values = "";
+                    last_slot = "";
+                    continue;
+                }
                 last_values = "";
                 last_slot = "";
             }
@@ -140,7 +145,7 @@ pair<string, string> SlotTree::Translate(const string sentence)
     }
 
     if (!last_slot.empty()) {
-        result += last_values + ':' + last_slot;
+        result += last_values + last_slot;
         slots += last_slot;
     }
 
@@ -151,43 +156,41 @@ pair<string, string> SlotTree::Translate(const string sentence)
 
 // IntentTree implement begin
 
-void IntentTree::Add(const string values, const string & slot)
+void IntentTree::Add(const string value, const string & slot)
 {
-    const char *ch = values.data();
-    string tempStr;
-    _curSet = &_rootSet;
-    while (true)
-    {
-        tempStr = *ch;
-        if (!*(ch + 1))
-            break;
-
-        _curSet = _insert(CharUnit(tempStr));
-        ch++;
+    if (slot.empty()) {
+        _curSet = _insert(CharUnit(value));
+        //cout << "Insert(" << value << ")" << endl;
     }
-    _insert(CharUnit(tempStr, slot));
-    _curSet = &_rootSet;
+    else {
+        _insert(CharUnit(value, slot));
+        _curSet = &_rootSet;
+        //cout << "Insert(" << value << ", " << slot << ")" << endl;
+    }
 }
 
 pair<string, string> IntentTree::Translate(const string sentence)
 {
     _curSet = &_rootSet;
-    const char *ch = sentence.data();
+    vector<string> strPieces;
     string tempStr;
     string result = "";
     string slots = "";
     string last_values = "";
     string last_slot = "";
 
-    while (*ch)
-    {
-        tempStr = *ch;
+    split(sentence, strPieces, " ");
+
+    unsigned int idx = 0;
+    while (idx < strPieces.size()) {
+        tempStr = strPieces[idx];
         pair<set<CharUnit> *, string> piece_result = _find(CharUnit(tempStr));
         set<CharUnit> * nextSet = piece_result.first;
         string curSlot = piece_result.second;
+        //cout << tempStr << ", " << curSlot << endl;
 
         if (NULL != nextSet) {
-            last_values += tempStr;
+            last_values += tempStr + " ";
             if (!curSlot.empty())
                 last_slot = curSlot;
             _curSet = nextSet;
@@ -197,21 +200,27 @@ pair<string, string> IntentTree::Translate(const string sentence)
             _curSet = &_rootSet;
             if (!last_slot.empty()) {
                 result += last_values + last_slot + " ";
-                slots += last_slot;
+                slots += last_slot + " ";
                 last_values = "";
                 last_slot = "";
                 continue;
             }
             else{
+                if (!last_values.empty()) {
+                    last_values = "";
+                    last_slot = "";
+                    continue;
+                }
                 last_values = "";
                 last_slot = "";
             }
         }
-        ch++;
+
+        idx++;
     }
 
     if (!last_slot.empty()) {
-        result += last_values + ':' + last_slot;
+        result += last_values + last_slot;
         slots += last_slot;
     }
 

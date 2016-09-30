@@ -29,10 +29,11 @@ bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype)
              cout<<" File format wrong!"<<endl;
              continue;
         }
-        int i;
+        unsigned int i;
         for(i=0;i<splitans.size() - 2;i++)
         {
           tree->Add(splitans[i], string());
+          //cout<<splitans[i]<<endl;
         }
 		//istringstream istr(str);
         //istr>>value;
@@ -43,16 +44,17 @@ bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype)
 }
 
 int main(){
-    TrieTree chs2slots;
-    TrieTree slotsIntend;
+    SlotTree chs2slots;
+    IntentTree slots2Intent;
 
     ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
-    ReadSlotsRules(&slotsIntend, "slots2intend.txt", " ");
+    ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
 
-    cout<<"脚丫子"<< sizeof("脚")<< endl;
-    pair<string, string> ret = chs2slots.Translate("abc def 你好小心我揍你哈喽 哈哈你真棒789789腰酸脚软五更泄泻！过年时检查出来的这几天总是心慌！说够不着心似的！是肺衰竭吗？怎么办");
-    pair<string, string> result = slotsIntend.Translate(ret.second);
+    pair<string, string> ret = chs2slots.Translate("abc def 你好 小心我揍你哈喽 哈哈你真棒789789腰酸脚软五更泄泻！过年时检查出来的这几天总是心慌！说够不着心似的！是肺衰竭吗？怎么办");
+    pair<string, string> result = slots2Intent.Translate(ret.second);
     ofile<<result.first<<endl;
+    cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
+    cout << "Output chs2slots obtained slots: [ " << ret.second << " ]" << endl << endl;
     cout << "Output chs2slots translate result: [ " << result.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << result.second << " ]" << endl;
 

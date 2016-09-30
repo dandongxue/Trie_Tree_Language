@@ -27,10 +27,11 @@ private:
 
 class TrieTree {
 public:
+    TrieTree() { _curSet = &_rootSet; }
     virtual void Add(const string values, const string & slot) = 0;
     virtual pair<string, string> Translate(const string sentence) = 0;
 
-private:
+protected:
     set<CharUnit> * _insert(const CharUnit & charUnit);
     pair<set<CharUnit> *, string> _find(const CharUnit & charUnit);
     CharUnit * _cast2var(const set<CharUnit>::iterator & iter);
@@ -47,7 +48,7 @@ public:
 
 class IntentTree : public TrieTree {
 public:
-    void Add(const string values, const string & slot);
+    void Add(const string value, const string & slot);
     pair<string, string> Translate(const string sentence);
 };
 
