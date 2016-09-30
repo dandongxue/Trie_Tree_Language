@@ -9,18 +9,25 @@ using namespace trietree;
 
 int main(){
     TrieTree chs2slots;
-    
-    chs2slots.Add("abc", "english1");
-    chs2slots.Add("def", "english2");
-    chs2slots.Add("123", "number1");
-    chs2slots.Add("456", "number2");
-    chs2slots.Add("ä½ è¯´å‘¢", "ask");
-    chs2slots.Add("ä½ å¥½", "hi");
-    chs2slots.Add("å“ˆå–½", "hi");
-    chs2slots.Add("é—®ä½ ä¸ªé—®é¢˜", "ask");
-    chs2slots.Add("å°å¿ƒæˆ‘æä½ ", "threat");
-    
-    pair<string, string> ret = chs2slots.Translate("abc 456 def ä½ å¥½ å°å¿ƒæˆ‘æä½  å“ˆå–½ å“ˆå“ˆ ä½ çœŸæ£’ ä½  é—®ä¸ªé—®é¢˜ é—®ä¸‹ å“¦ ghawogh 157925192");
+
+    //chs2slots.Add("abc", "english1");
+    //chs2slots.Add("def", "english2");
+    //chs2slots.Add("123", "number1");
+    //chs2slots.Add("456", "number2");
+    chs2slots.Add("ÖÇ³İ", "body");
+    chs2slots.Add("Ñü", "body");
+    chs2slots.Add("ÍÈ", "body");
+    chs2slots.Add("½Å", "body");
+    chs2slots.Add("Èí", "feel");
+    chs2slots.Add("Ëá", "feel");
+    chs2slots.Add("ÌÛ", "feel");
+    chs2slots.Add("Í´", "feel");
+    chs2slots.Add("¹şà¶", "hi");
+    chs2slots.Add("ÎÊÄã¸öÎÊÌâ", "ask");
+    chs2slots.Add("Ğ¡ĞÄÎÒ×áÄã", "threat");
+
+    //pair<string, string> ret = chs2slots.Translate("abc 456 def ÄãºÃĞ¡ĞÄÎÒ×áÄã¹şà¶ ¹ş¹şÄãÕæ°ô789789ÑüËá½ÅÈíÎå¸üĞ¹ĞºÊ§Ãß¶àÃÎÊÖĞÄ½ÅĞÄ¶îÍ·ƒØĞéº¹Éà¸ÉÉ¬ÅÂÀä");
+    pair<string, string> ret = chs2slots.Translate("ĞÄ½Å");
     cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << ret.second << " ]" << endl;
 
