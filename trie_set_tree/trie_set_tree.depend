@@ -18,3 +18,22 @@
 1475232824 source:f:\repository\trie_tree_language\trie_set_tree.cc
 	"trie_set_tree.h"
 
+1475584564 source:e:\bayes\gitresp\trie_tree_language\main.cc
+	<iostream>
+	<set>
+	<utility>
+	<string>
+	<fstream>
+	<sstream>
+	"trie_set_tree.h"
+
+1475554409 e:\bayes\gitresp\trie_tree_language\trie_set_tree.h
+	<iostream>
+	<set>
+	<string>
+	<utility>
+	<vector>
+
+1475554409 source:e:\bayes\gitresp\trie_tree_language\trie_set_tree.cc
+	"trie_set_tree.h"
+

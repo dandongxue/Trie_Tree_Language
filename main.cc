@@ -50,13 +50,15 @@ int main(){
     ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
     ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
 
-    pair<string, string> ret = chs2slots.Translate("abc def 你好 小心我揍你哈喽 哈哈你真棒789789腰酸脚软五更泄泻！过年时检查出来的这几天总是心慌！说够不着心似的！是肺衰竭吗？怎么办");
+    string strToTest="abc def 你好 小心我揍你哈喽 哈哈你真棒789789腰酸脚软五更泄泻！过年时检查出来的这几天总是心慌！说够不着心似的！是肺衰竭吗？怎么办";
+    pair<string, string> ret = chs2slots.Translate(strToTest);
     pair<string, string> result = slots2Intent.Translate(ret.second);
     ofile<<result.first<<endl;
+    cout<<"Before: [ "<<strToTest<<" ]"<<endl;
     cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << ret.second << " ]" << endl << endl;
-    cout << "Output chs2slots translate result: [ " << result.first << " ]" << endl;
-    cout << "Output chs2slots obtained slots: [ " << result.second << " ]" << endl;
+    cout << "Output slots2Intent translate result: [ " << result.first << " ]" << endl;
+    cout << "Output slots2Intent obtained slots: [ " << result.second << " ]" << endl;
 
 	return 0;
 }
