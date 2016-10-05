@@ -29,7 +29,7 @@ class TrieTree {
 public:
     TrieTree() { _curSet = &_rootSet; }
     virtual void Add(const string values, const string & slot) = 0;
-    virtual pair<string, string> Translate(const string sentence) = 0;
+    virtual pair<string, string> Translate(const string sentence,string &secstr) = 0;
 
 protected:
     set<CharUnit> * _insert(const CharUnit & charUnit);
@@ -43,13 +43,13 @@ protected:
 class SlotTree : public TrieTree {
 public:
     void Add(const string values, const string & slot);
-    pair<string, string> Translate(const string sentence);
+    pair<string, string> Translate(const string sentence,string &secstr);
 };
 
 class IntentTree : public TrieTree {
 public:
     void Add(const string value, const string & slot);
-    pair<string, string> Translate(const string sentence);
+    pair<string, string> Translate(const string sentence,string &secstr);
 };
 
 // Common string processing function

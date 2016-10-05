@@ -98,7 +98,7 @@ void SlotTree::Add(const string values, const string & slot)
 }
 
 
-pair<string, string> SlotTree::Translate(const string sentence)
+pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
 {
     _curSet = &_rootSet;
     const char *ch = sentence.data();
@@ -169,28 +169,30 @@ void IntentTree::Add(const string value, const string & slot)
     }
 }
 
-pair<string, string> IntentTree::Translate(const string sentence)
+pair<string, string> IntentTree::Translate(const string sentence,string &secstr)
 {
     _curSet = &_rootSet;
     vector<string> strPieces;
-    string tempStr;
+    vector<string> vecSecStr;
+    string tempStr,tempSec;
     string result = "";
     string slots = "";
-    string last_values = "";
+    string last_values = "",last_sec="";
     string last_slot = "";
-
     split(sentence, strPieces, " ");
-
+    split(secstr, vecSecStr, " ");
+    secstr="";
     unsigned int idx = 0;
     while (idx < strPieces.size()) {
         tempStr = strPieces[idx];
+        tempSec=vecSecStr[idx];
         pair<set<CharUnit> *, string> piece_result = _find(CharUnit(tempStr));
         set<CharUnit> * nextSet = piece_result.first;
         string curSlot = piece_result.second;
-        //cout << tempStr << ", " << curSlot << endl;
 
         if (NULL != nextSet) {
             last_values += tempStr + " ";
+            last_sec+=tempSec+tempStr+" ";
             if (!curSlot.empty())
                 last_slot = curSlot;
             _curSet = nextSet;
@@ -200,8 +202,10 @@ pair<string, string> IntentTree::Translate(const string sentence)
             _curSet = &_rootSet;
             if (!last_slot.empty()) {
                 result += last_values + last_slot + " ";
-                slots += last_slot + " ";
+                slots  += last_slot + " ";
+                secstr += last_sec + " ";
                 last_values = "";
+                last_sec="";
                 last_slot = "";
                 continue;
             }
@@ -209,18 +213,21 @@ pair<string, string> IntentTree::Translate(const string sentence)
                 if (!last_values.empty()) {
                     last_values = "";
                     last_slot = "";
+                    last_sec="";
                     continue;
                 }
                 last_values = "";
                 last_slot = "";
+                last_sec="";
+
             }
         }
-
         idx++;
     }
 
     if (!last_slot.empty()) {
         result += last_values + last_slot;
+        secstr += last_sec;
         slots += last_slot;
     }
 
