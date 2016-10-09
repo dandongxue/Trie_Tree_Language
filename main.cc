@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <set>
 #include <utility>
 #include <string>
@@ -71,11 +71,11 @@ void GetIntendsSlots(string strToTest)
         queSlots.push(vecSlots[i]);
     }
     //ofile<<result.first<<endl;
-    /*
+
     cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << ret.second << "]" << endl << endl;
     cout << "Output slots2Intent translate result: [ " << result.first << "]" << endl;
-    cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;*/
+    cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;
     split(result.first, vecIntends," ");
     for(int i=0;i<vecIntends.size();i++)
     {
@@ -121,7 +121,7 @@ int main(){
 
     ReadSlotsRules(&chs2slots, "trie_set_tree/chs2slots.txt", "\t");
     ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt", " ");
-    TestStr("trie_set_tree/demo.txt");
+    //TestStr("trie_set_tree/demo.txt");
     cout<<"======================================================================="<<endl;
     string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
     GetIntendsSlots(strToTest);

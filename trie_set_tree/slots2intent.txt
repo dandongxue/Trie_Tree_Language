@@ -1,4 +1,6 @@
-﻿:english1 :english2 ::English
+:english1 :english2 ::English
 :body :feel ::Symptom
-:body :dease ::Illness
+:body :disease ::Illness
 :hi :threat ::Conflict
+:medication ::Take
+:disease ::Illness
