@@ -260,8 +260,6 @@ V C		:medication
 复方利福平滴耳液	:medication
 硼酸甘油滴耳液	:medication
 金嗓利咽丸	:medication
-	:medication
-	:medication
 保妇康栓	:medication
 干扰素	:medication
 妇炎消胶囊	:medication
@@ -333,7 +331,6 @@ G N R H A		:medication
 西替利嗪	:medication
 福莫特罗干粉吸入剂	:medication
 色甘酸钠	:medication
-	:medication
 头孢西丁	:medication
 肌苷	:medication
 二丁酰环磷腺苷	:medication
@@ -743,7 +740,6 @@ L丙氨酰谷氨酰胺	:medication
 复方利福平滴耳液	:medication
 硼酸甘油滴耳液	:medication
 金嗓利咽丸	:medication
-	:medication
 丽珠得乐	:medication
 庆大霉素普鲁卡因	:medication
 莫沙比利	:medication

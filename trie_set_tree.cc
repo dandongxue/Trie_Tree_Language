@@ -102,11 +102,13 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
 {
     _curSet = &_rootSet;
     const char *ch = sentence.data();
+//    const char *memory_point = ch + 1;
     string tempStr;
     string result = "";
     string slots = "";
     string last_values = "";
     string last_slot = "";
+    
 
     while (*ch)
     {
@@ -117,8 +119,10 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
 
         if (NULL != nextSet) {
             last_values += tempStr;
-            if (!curSlot.empty())
+            if (!curSlot.empty()) {
                 last_slot = curSlot;
+  //          	memory_point = ch + 1;    
+            }
             _curSet = nextSet;
         }
         else
@@ -129,16 +133,19 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
                 slots += last_slot + " ";
                 last_values = "";
                 last_slot = "";
+    //            ch = memory_point;
                 continue;
             }
             else{
                 if (!last_values.empty()) {
                     last_values = "";
                     last_slot = "";
+      //              ch = memory_point;
                     continue;
                 }
                 last_values = "";
                 last_slot = "";
+        //        memory_point = ch + 1;
             }
         }
         ch++;
