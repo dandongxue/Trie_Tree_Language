@@ -23,6 +23,9 @@ def	:english2
 痛	:feel
 痒	:feel
 冷	:feel
+发红	:feel
+发烧	:feel
+低烧	:feel
 难受	:feel
 疼痛	:feel
 肺衰竭	:dease
