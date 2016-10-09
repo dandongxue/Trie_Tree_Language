@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <set>
 #include <utility>
 #include <string>
@@ -121,12 +121,12 @@ int main(){
 
     ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
     ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
-    TestStr("demo.txt");
+    //TestStr("demo.txt");
     cout<<"======================================================================="<<endl;
-    string strToTest="abc def ÄãºÃÐ¡ÐÄÎÒ×áÄã¹þà¶ ¹þ¹þÄãÕæ°ôÑüËá½ÅÈíÎå¸ü£¡ÐÄËÆµÄ£¡·ÎË¥½ßÂð£¿ÔõÃ´°ì";
+    string strToTest="abc def ä½ å¥½å°å¿ƒæˆ‘æä½ å“ˆå–½ å“ˆå“ˆä½ çœŸæ£’è…°é…¸è„šè½¯äº”æ›´ï¼å¿ƒä¼¼çš„ï¼è‚ºè¡°ç«­å—ï¼Ÿæ€Žä¹ˆåŠž";
     GetIntendsSlots(strToTest);
     cout<<"======================================================================="<<endl;
-    GetIntendsSlots("ÑüËá½ÅÈí£¬Îå¸üÐ¹Ðº£¬Ê§Ãß¶àÃÎ£¬ÊÖÐÄ½ÅÐÄ¶îÍ·ƒØÐéº¹£¬Éà¸ÉÉ¬£¬ÅÂÀä");
+    GetIntendsSlots("è…°é…¸è„šè½¯ï¼Œäº”æ›´æ³„æ³»ï¼Œå¤±çœ å¤šæ¢¦ï¼Œæ‰‹å¿ƒè„šå¿ƒé¢å¤´å†è™šæ±—ï¼ŒèˆŒå¹²æ¶©ï¼Œæ€•å†·");
 
 
 	return 0;
