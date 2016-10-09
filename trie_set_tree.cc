@@ -102,12 +102,13 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
 {
     _curSet = &_rootSet;
     const char *ch = sentence.data();
-//    const char *memory_point = ch + 1;
+    const char *memory_point = ch + 1;
     string tempStr;
     string result = "";
     string slots = "";
     string last_values = "";
     string last_slot = "";
+    string last_result = "";
     
 
     while (*ch)
@@ -120,8 +121,9 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
         if (NULL != nextSet) {
             last_values += tempStr;
             if (!curSlot.empty()) {
-                last_slot = curSlot;
-  //          	memory_point = ch + 1;    
+            	last_slot = curSlot;
+            	last_result = last_values + last_slot + " ";
+            	memory_point = ch + 1;    
             }
             _curSet = nextSet;
         }
@@ -129,23 +131,25 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
         {
             _curSet = &_rootSet;
             if (!last_slot.empty()) {
-                result += last_values + last_slot + " ";
+                result += last_result;
                 slots += last_slot + " ";
                 last_values = "";
                 last_slot = "";
-    //            ch = memory_point;
+                ch = memory_point;
                 continue;
             }
             else{
                 if (!last_values.empty()) {
                     last_values = "";
                     last_slot = "";
-      //              ch = memory_point;
+                    ch = memory_point++;
                     continue;
                 }
-                last_values = "";
-                last_slot = "";
-        //        memory_point = ch + 1;
+                else {
+                	last_values = "";
+                	last_slot = "";
+                	memory_point++;
+               	}
             }
         }
         ch++;
@@ -186,10 +190,13 @@ pair<string, string> IntentTree::Translate(const string sentence,string &secstr)
     string slots = "";
     string last_values = "",last_sec="";
     string last_slot = "";
+    string last_result = "";
     split(sentence, strPieces, " ");
     split(secstr, vecSecStr, " ");
     secstr="";
+    
     unsigned int idx = 0;
+    unsigned int memory_idx = idx + 1;
     while (idx < strPieces.size()) {
         tempStr = strPieces[idx];
         tempSec=vecSecStr[idx];
@@ -200,20 +207,25 @@ pair<string, string> IntentTree::Translate(const string sentence,string &secstr)
         if (NULL != nextSet) {
             last_values += tempStr + " ";
             last_sec+=tempSec+tempStr+" ";
-            if (!curSlot.empty())
+            if (!curSlot.empty()) {
                 last_slot = curSlot;
+                last_result = last_values + last_slot + " ";
+                memory_idx = idx + 1;
+            }
             _curSet = nextSet;
         }
         else
         {
             _curSet = &_rootSet;
             if (!last_slot.empty()) {
-                result += last_values + last_slot + " ";
+                result += last_result;
                 slots  += last_slot + " ";
                 secstr += last_sec + " ";
                 last_values = "";
                 last_sec="";
                 last_slot = "";
+                last_result = "";
+                idx = memory_idx;
                 continue;
             }
             else{
@@ -221,12 +233,15 @@ pair<string, string> IntentTree::Translate(const string sentence,string &secstr)
                     last_values = "";
                     last_slot = "";
                     last_sec="";
+                    idx = memory_idx++;
                     continue;
                 }
-                last_values = "";
-                last_slot = "";
-                last_sec="";
-
+                else {
+                	last_values = "";
+                	last_slot = "";
+                	last_sec="";
+                	memory_idx++;
+				}
             }
         }
         idx++;

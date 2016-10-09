@@ -92,7 +92,8 @@ void GetIntendsSlots(string strToTest)
     cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << ret.second << "]" << endl << endl;
     cout << "Output slots2Intent translate result: [ " << result.first << "]" << endl;
-    cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;*/
+    cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;
+*/
     split(result.first, vecIntends," ");
     for(int i=0;i<vecIntends.size();i++)
     {
@@ -141,13 +142,12 @@ int main(){
     ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt", " ");
     ReadSlotsRules(&chs2slots, "trie_set_tree/disease2slots.txt", "\t");
     ReadSlotsRules(&chs2slots, "trie_set_tree/medication2slots.txt", "\t");
-    //TestStr("trie_set_tree/demo.txt");
+    TestStr("trie_set_tree/demo.txt");
     cout<<"======================================================================="<<endl;
     string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
     GetIntendsSlots(strToTest);
     cout<<"======================================================================="<<endl;
     GetIntendsSlots("腰酸脚软，五更泄泻，失眠多梦，手心脚心额头冐虚汗，舌干涩，怕冷");
-	GetIntendsSlots("十几年前得过急性胆囊炎。");
 
 	return 0;
 }
