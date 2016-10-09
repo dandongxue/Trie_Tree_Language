@@ -119,9 +119,9 @@ bool TestStr(char *filename)
 }
 int main(){
 
-    ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
-    ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
-    //TestStr("demo.txt");
+    ReadSlotsRules(&chs2slots, "trie_set_tree/chs2slots.txt", "\t");
+    ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt", " ");
+    TestStr("trie_set_tree/demo.txt");
     cout<<"======================================================================="<<endl;
     string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
     GetIntendsSlots(strToTest);
