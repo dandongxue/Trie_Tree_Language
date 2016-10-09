@@ -8,7 +8,9 @@
 #include "trie_set_tree.h"
 using namespace std;
 using namespace trietree;
-ofstream ofile("dan.txt");
+//ofstream ofile("dan.txt");
+SlotTree chs2slots;
+IntentTree slots2Intent;
 bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype)
 {
    ifstream infile(slotfilename);
@@ -51,37 +53,34 @@ string GetSlotsWord(const vector<string >vecTempSlots,string splittype)
     return secStr;
 }
 
-int main(){
-    SlotTree chs2slots;
-    IntentTree slots2Intent;
-    ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
-    ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
-    string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
+void GetIntendsSlots(string strToTest)
+{
+    string ans="",tempStr="";
+    vector<string> vecTempSlots,vecIntends,vecSlots;
+    queue<string> queSlots,queIntends;
 
     pair<string, string> ret = chs2slots.Translate(strToTest,strToTest);
-    cout<<"Before: [ "<<strToTest<<" ]"<<endl;
-    cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
-
-    vector<string> vecTempSlots,vecIntends;
-    queue<string> queSlots,queIntends;
+    cout<<"Origin Str: [ "<<strToTest<<" ]"<<endl;
     split(ret.first, vecTempSlots," ");
-    string secStr=GetSlotsWord(vecTempSlots,":");
+    string secStr=GetSlotsWord(vecTempSlots,":");//Split words:slot
     pair<string, string> result = slots2Intent.Translate(ret.second,secStr);
-    //cout<<"== "<<secStr<<endl;
-    vector<string> vecSlots;
+    //cout<<" secStr == "<<secStr<<endl;
     split(secStr, vecSlots," ");
     for(int i=0;i<vecSlots.size();i++)
     {
         queSlots.push(vecSlots[i]);
     }
-    ofile<<result.first<<endl;
-    cout<<"======================================================================="<<endl;
+    //ofile<<result.first<<endl;
+    /*
+    cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
+    cout << "Output chs2slots obtained slots: [ " << ret.second << "]" << endl << endl;
+    cout << "Output slots2Intent translate result: [ " << result.first << "]" << endl;
+    cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;*/
     split(result.first, vecIntends," ");
     for(int i=0;i<vecIntends.size();i++)
     {
         queIntends.push(vecIntends[i]);
     }
-    string ans="",tempStr="";
     while(!queIntends.empty())
     {
         tempStr = queIntends.front();
@@ -99,9 +98,36 @@ int main(){
         }
            queIntends.pop();
     }
+}
+bool TestStr(char *filename)
+{
+   ifstream infile(filename);
+   int num=0;
+   if(!infile)
+   {
+     cout<<"Can not open file: "<<filename<<endl;
+     return false;
+   }
+   for(;!infile.eof();num++)
+   {
+       string str;
+       getline(infile, str);
+       cout<<"======================================================================="<<endl;
+       GetIntendsSlots(str);
+   }
+   return true;
+}
+int main(){
 
-   // cout << "Output chs2slots obtained slots: [ " << ret.second << "]" << endl << endl;
-   // cout << "Output slots2Intent translate result: [ " << result.first << "]" << endl;
-   // cout << "Output slots2Intent obtained slots: [ " << result.second << "]" << endl;
+    ReadSlotsRules(&chs2slots, "chs2slots.txt", "\t");
+    ReadSlotsRules(&slots2Intent, "slots2intent.txt", " ");
+    TestStr("demo.txt");
+    cout<<"======================================================================="<<endl;
+    string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
+    GetIntendsSlots(strToTest);
+    cout<<"======================================================================="<<endl;
+    GetIntendsSlots("腰酸脚软，五更泄泻，失眠多梦，手心脚心额头冐虚汗，舌干涩，怕冷");
+
+
 	return 0;
 }

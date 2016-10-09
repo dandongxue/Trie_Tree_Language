@@ -1,21 +1,22 @@
 # depslib dependency file v1.0
-1475232528 source:f:\repository\trie_tree_language\main.cc
+1475977235 source:f:\repository\trie_tree_language\main.cc
 	<iostream>
 	<set>
 	<utility>
 	<string>
 	<fstream>
 	<sstream>
+	<queue>
 	"trie_set_tree.h"
 
-1475231643 f:\repository\trie_tree_language\trie_set_tree.h
+1475889485 f:\repository\trie_tree_language\trie_set_tree.h
 	<iostream>
 	<set>
 	<string>
 	<utility>
 	<vector>
 
-1475232824 source:f:\repository\trie_tree_language\trie_set_tree.cc
+1475889485 source:f:\repository\trie_tree_language\trie_set_tree.cc
 	"trie_set_tree.h"
 
 1475652931 source:e:\bayes\gitresp\trie_tree_language\main.cc
