@@ -10,4 +10,4 @@
  2.trie_set_tree.cc：类的实现文件  
  3.trie_set_tree.h:类的头文件  
  
- ![image name](https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png)
+ ![image name](image/trie_set_tree.png)
