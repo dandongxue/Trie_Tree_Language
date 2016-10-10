@@ -8,7 +8,7 @@
  工程共三个文件：  
  1.main.cc :主文件  
  2.trie_set_tree.cc :类的实现文件  
- 3.trie_set_tree.h :类的头文件
- 4.规则文件在trie_set_tree目录下  
+ 3.trie_set_tree.h :类的头文件  
+ 4.规则文件在trie_set_tree目录下    
  
  ![trie set tree](image/trie_set_tree.png)
