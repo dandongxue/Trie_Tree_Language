@@ -2,7 +2,8 @@
 
 namespace trietree {
 
-string trim(const string& str)
+inline string
+trim(const string& str)
 {
     string::size_type pos = str.find_first_not_of(' ');
     if (pos == string::npos)
@@ -53,13 +54,15 @@ int split(const string& str, vector<string>& ret_, string sep)
 
 // TrieTree implement begin
 
-set<CharUnit> * TrieTree::_insert(const CharUnit & charUnit)
+inline set<CharUnit> *
+TrieTree::_insert(const CharUnit& charUnit)
 {
     CharUnit * temp = _cast2var(_curSet->insert(charUnit).first);
     return temp->getNextSet();
 }
 
-pair<set<CharUnit> *, string> TrieTree::_find(const CharUnit & charUnit)
+inline pair<set<CharUnit> *, string>
+TrieTree::_find(const CharUnit& charUnit)
 {
     set<CharUnit>::iterator it;
     it = _curSet->find(charUnit);
@@ -70,7 +73,8 @@ pair<set<CharUnit> *, string> TrieTree::_find(const CharUnit & charUnit)
     return pair<set<CharUnit> *, string>(temp->getNextSet(), temp->getSlot());
 }
 
-CharUnit * TrieTree::_cast2var(const set<CharUnit>::iterator & iter)
+inline CharUnit * 
+TrieTree::_cast2var(const set<CharUnit>::iterator& iter)
 {
     return const_cast<CharUnit *>(&(*iter));
 }
@@ -79,7 +83,8 @@ CharUnit * TrieTree::_cast2var(const set<CharUnit>::iterator & iter)
 
 // SlotTree implement begin
 
-void SlotTree::Add(const string values, const string & slot)
+inline void
+SlotTree::Add(const string& values, const string& slot)
 {
     const char *ch = values.data();
     string tempStr;
@@ -98,7 +103,8 @@ void SlotTree::Add(const string values, const string & slot)
 }
 
 
-pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
+pair<string, string> 
+SlotTree::Translate(const string& sentence,string& secStr)
 {
     _curSet = &_rootSet;
     const char *ch = sentence.data();
@@ -126,6 +132,7 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
             	memory_point = ch + 1;    
             }
             _curSet = nextSet;
+            
         }
         else
         {
@@ -167,7 +174,8 @@ pair<string, string> SlotTree::Translate(const string sentence,string &secStr)
 
 // IntentTree implement begin
 
-void IntentTree::Add(const string value, const string & slot)
+inline void
+IntentTree::Add(const string& value, const string& slot)
 {
     if (slot.empty()) {
         _curSet = _insert(CharUnit(value));
@@ -180,8 +188,9 @@ void IntentTree::Add(const string value, const string & slot)
     }
 }
 
-pair<string, string> IntentTree::Translate(const string sentence,string &secstr)
-{
+pair<string, string> 
+IntentTree::Translate(const string& sentence,string& secstr)
+{ 
     _curSet = &_rootSet;
     vector<string> strPieces;
     vector<string> vecSecStr;

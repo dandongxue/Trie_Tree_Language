@@ -1,7 +1,4 @@
 #include <iostream>
-#include <set>
-#include <utility>
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <queue>
@@ -9,18 +6,19 @@
 
 using namespace std;
 using namespace trietree;
-//ofstream ofile("dan.txt");
+
+ofstream ofile("Output.txt");
 SlotTree chs2slots;
 IntentTree slots2Intent;
 
-void convert_line_to_linux(string& str)
+void ConvertLine2UnixFmt(string& str)
 {
     int index = str.rfind('\r');
     if (index != string::npos)
         str.replace(index, 1, 1, '\0');
 }
 
-bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype)
+bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype = "\t")//Read rules from files
 {
    ifstream infile(slotfilename);
    int num=1;
@@ -37,7 +35,7 @@ bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype)
 		if (str.empty())
 			break;
 			
-    	convert_line_to_linux(str);
+    	ConvertLine2UnixFmt(str);
     	
         vector<string> splitans;
         split(str, splitans,splittype);
@@ -69,25 +67,24 @@ string GetSlotsWord(const vector<string >vecTempSlots,string splittype)
     return secStr;
 }
 
-void GetIntendsSlots(string strToTest)
+void GetIntendsSlots(string strToTest)//Input sentence and get results
 {
-    convert_line_to_linux(strToTest);
+    ConvertLine2UnixFmt(strToTest);
     string ans="",tempStr="";
     vector<string> vecTempSlots,vecIntends,vecSlots;
     queue<string> queSlots,queIntends;
 
-    pair<string, string> ret = chs2slots.Translate(strToTest,strToTest);
-    cout<<"Origin Str: [ "<<strToTest<<" ]"<<endl;
+    pair<string, string> ret = chs2slots.Translate(strToTest, strToTest);
+    cout<<"Original Str: [ "<<strToTest<<" ]"<<endl;
+    ofile<<"Original Str: [ "<<strToTest<<" ]"<<endl;
     split(ret.first, vecTempSlots," ");
     string secStr=GetSlotsWord(vecTempSlots,":");//Split words:slot
     pair<string, string> result = slots2Intent.Translate(ret.second,secStr);
-    //cout<<" secStr == "<<secStr<<endl;
     split(secStr, vecSlots," ");
     for(int i=0;i<vecSlots.size();i++)
     {
         queSlots.push(vecSlots[i]);
     }
-    //ofile<<result.first<<endl;
 /*
     cout << "Output chs2slots translate result: [ " << ret.first << " ]" << endl;
     cout << "Output chs2slots obtained slots: [ " << ret.second << "]" << endl << endl;
@@ -105,19 +102,19 @@ void GetIntendsSlots(string strToTest)
         if(tempStr.length()>1 && tempStr[1] == ':')
         {
             tempStr += " "+ans;
-            cout<<"Show Ans [ "<<tempStr<<+" ]"<<endl;
+	    	ofile<<"Ans [" <<tempStr<<" ]"<<endl;
+            cout<<"Ans [ "<<tempStr<<+" ]"<<endl;
             ans = "";
         }
         else
         {
             ans += queSlots.front()+" ";
-            //cout<<queSlots.front()<<endl;
             queSlots.pop();
         }
            queIntends.pop();
     }
 }
-bool TestStr(const char *filename)
+bool TestStrFrmFiles(const char *filename)// Read Files And Test The Functions
 {
    ifstream infile(filename);
    int num=0;
@@ -126,28 +123,30 @@ bool TestStr(const char *filename)
      cout<<"Can not open file: "<<filename<<endl;
      return false;
    }
+   
    for(;!infile.eof();num++)
    {
        string str;
        getline(infile, str);
-       convert_line_to_linux(str);
-       cout<<"======================================================================="<<endl;
+       if (str.empty())
+           break;
+           
+       ConvertLine2UnixFmt(str);
+       ofile << "======================================================================="<<endl;
+       cout << "======================================================================="<<endl;
        GetIntendsSlots(str);
    }
    return true;
 }
 int main(){
-
-    ReadSlotsRules(&chs2slots, "trie_set_tree/chs2slots.txt", "\t");
-    ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt", " ");
-    ReadSlotsRules(&chs2slots, "trie_set_tree/disease2slots.txt", "\t");
-    ReadSlotsRules(&chs2slots, "trie_set_tree/medication2slots.txt", "\t");
-    TestStr("trie_set_tree/demo.txt");
-    cout<<"======================================================================="<<endl;
-    string strToTest="abc def 你好小心我揍你哈喽 哈哈你真棒腰酸脚软五更！心似的！肺衰竭吗？怎么办";
-    GetIntendsSlots(strToTest);
-    cout<<"======================================================================="<<endl;
-    GetIntendsSlots("腰酸脚软，五更泄泻，失眠多梦，手心脚心额头冐虚汗，舌干涩，怕冷");
+	// Read slots and intents rules from files
+    ReadSlotsRules(&chs2slots, "trie_set_tree/chs2slots.txt");
+    ReadSlotsRules(&chs2slots, "trie_set_tree/disease2slots.txt");
+    ReadSlotsRules(&chs2slots, "trie_set_tree/medication2slots.txt");
+    ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt");
+    
+    // Test files
+    TestStrFrmFiles("trie_set_tree/demo.txt");
 
 	return 0;
 }
