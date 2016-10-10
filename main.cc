@@ -7,7 +7,7 @@
 using namespace std;
 using namespace trietree;
 
-ofstream ofile("Output.txt");
+ofstream ofile("output.txt");
 SlotTree chs2slots;
 IntentTree slots2Intent;
 
@@ -15,7 +15,7 @@ void ConvertLine2UnixFmt(string& str)
 {
     int index = str.rfind('\r');
     if (index != string::npos)
-        str.replace(index, 1, 1, '\0');
+        str.erase(index);
 }
 
 bool ReadSlotsRules(TrieTree* tree,const char* slotfilename, string splittype = "\t")//Read rules from files
@@ -140,13 +140,13 @@ bool TestStrFrmFiles(const char *filename)// Read Files And Test The Functions
 }
 int main(){
 	// Read slots and intents rules from files
-    ReadSlotsRules(&chs2slots, "trie_set_tree/chs2slots.txt");
-    ReadSlotsRules(&chs2slots, "trie_set_tree/disease2slots.txt");
-    ReadSlotsRules(&chs2slots, "trie_set_tree/medication2slots.txt");
-    ReadSlotsRules(&slots2Intent, "trie_set_tree/slots2intent.txt");
+    ReadSlotsRules(&chs2slots, "rules/chs.slot");
+    ReadSlotsRules(&chs2slots, "rules/disease.slot");
+    ReadSlotsRules(&chs2slots, "rules/medication.slot");
+    ReadSlotsRules(&slots2Intent, "rules/all.intent");
     
     // Test files
-    TestStrFrmFiles("trie_set_tree/demo.txt");
+    TestStrFrmFiles("demo.txt");
 
 	return 0;
 }
