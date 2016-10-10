@@ -48,7 +48,6 @@ public:
     pair<string, string> Translate(const string& sentence, string &secstr);
 };
 
-// Translate slot(s) to intent
 class IntentTree : public TrieTree {
 public:
     void Add(const string& value, const string& slot);
