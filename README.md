@@ -1,19 +1,46 @@
-# Trie_Tree_Language  
+# SimpleClassify  
 
- è¯¥Demoä¸»è¦æ˜¯åŸºäºŽå­—å…¸æ ‘æ•°æ®ç»“æž„ï¼ˆè§ä¸‹å›¾ï¼‰ï¼Œå·¥ç¨‹ä¸­å…±å»ºç«‹ä¸¤æ£µæ ‘ï¼šSlotæ ‘å’ŒIntentæ ‘  
- 1.Slotæ ‘ï¼šå­˜å‚¨å®Œæ¯ä¸ªslotå­—ç¬¦ä¸²ï¼ˆä¾‹å¦‚ï¼šæ„Ÿå†’ï¼‰åŽï¼Œåœ¨æœ€åŽä¸€ä¸ªèŠ‚ç‚¹çš„ä½ç½®æŒ‡æ˜Žå¯¹åº”çš„slotåå­—ï¼Œä¾‹å¦‚ï¼š :disease  
- 2.Intentæ ‘ï¼šåˆ™æ˜¯åœ¨å­˜å‚¨å®Œæ¯ä¸€ä¸ªå¯¹åº”è§„åˆ™é¡ºåºä¹‹åŽï¼ˆä¾‹å¦‚ï¼š :body :feelï¼‰ï¼Œåœ¨æœ€åŽä¸€ä¸ªèŠ‚ç‚¹ä½ç½®æŒ‡æ˜Žå¯¹åº”çš„intentåå­—ï¼Œä¾‹å¦‚ï¼š ::Symptom  
- ä»Žæ–‡ä»¶è¯»å…¥å¹¶å­˜å‚¨è¿™äº›è§„åˆ™ä¹‹åŽï¼Œå¯¹è¾“å…¥çš„å¾…æ£€æµ‹æ–‡æœ¬è¿›è¡Œæœç´¢åŒ¹é…å³å¯ã€‚  
+ ¸ÃDemoÖ÷ÒªÊÇ»ùÓÚ×ÖµäÊ÷Êý¾Ý½á¹¹£¨¼ûÏÂÍ¼£©£¬¹¤³ÌÖÐ¹²½¨Á¢Á½¿ÃÊ÷£ºSlotÊ÷ºÍIntentÊ÷  
+ 1.SlotÊ÷£º´æ´¢ÍêÃ¿¸öslot×Ö·û´®£¨ÀýÈç£º¸ÐÃ°£©ºó£¬ÔÚ×îºóÒ»¸ö½ÚµãµÄÎ»ÖÃÖ¸Ã÷¶ÔÓ¦µÄslotÃû×Ö£¬ÀýÈç£º :disease  
+ 2.IntentÊ÷£ºÔòÊÇÔÚ´æ´¢ÍêÃ¿Ò»¸ö¶ÔÓ¦¹æÔòË³ÐòÖ®ºó£¨ÀýÈç£º :body :feel£©£¬ÔÚ×îºóÒ»¸ö½ÚµãÎ»ÖÃÖ¸Ã÷¶ÔÓ¦µÄintentÃû×Ö£¬ÀýÈç£º ::Symptom  
+ ´ÓÎÄ¼þ¶ÁÈë²¢´æ´¢ÕâÐ©¹æÔòÖ®ºó£¬¶ÔÊäÈëµÄ´ý¼ì²âÎÄ±¾½øÐÐËÑË÷Æ¥Åä¼´¿É¡£  
    
- å·¥ç¨‹å…±ä¸‰ä¸ªæ–‡ä»¶ï¼š  
- 1.main.cc :ä¸»æ–‡ä»¶  
- 2.trie_set_tree.cc :ç±»çš„å®žçŽ°æ–‡ä»¶  
- 3.trie_set_tree.h :ç±»çš„å¤´æ–‡ä»¶  
- 4.è§„åˆ™æ–‡ä»¶åœ¨rulesç›®å½•ä¸‹ï¼ˆ .slot ä¸Ž .intent æ–‡ä»¶å‡ä¸ºæ–‡æœ¬æ–‡ä»¶ï¼ŒåŽç¼€ç”¨äºŽåŒºåˆ†ï¼‰
+ ¹¤³Ì¹²Èý¸öÎÄ¼þ£º  
+ 1.main.cc :Ö÷ÎÄ¼þ  
+ 2.trie_set_tree.cc :ÀàµÄÊµÏÖÎÄ¼þ  
+ 3.trie_set_tree.h :ÀàµÄÍ·ÎÄ¼þ  
+ 4.¹æÔòÎÄ¼þÔÚrulesÄ¿Â¼ÏÂ£¨ .slot Óë .intent ÎÄ¼þ¾ùÎªÎÄ±¾ÎÄ¼þ£¬ºó×ºÓÃÓÚÇø·Ö£©
 
-   - xxx.slot æ–‡ä»¶ç”¨ä½œSlotå­—å…¸æ ‘çš„è¾“å…¥æ•°æ®ï¼Œç”¨ä»¥æž„å»ºæ•´æ£µSlotæ ‘ã€‚
-   - xxx.intent åŒç†ï¼Œç”¨ä»¥æž„å»ºæ•´æ£µIntentæ ‘ã€‚
+   - xxx.slot ÎÄ¼þÓÃ×÷Slot×ÖµäÊ÷µÄÊäÈëÊý¾Ý£¬ÓÃÒÔ¹¹½¨Õû¿ÃSlotÊ÷¡£
+   - xxx.intent Í¬Àí£¬ÓÃÒÔ¹¹½¨Õû¿ÃIntentÊ÷¡£
 
- 5.demo.txtä¸­æ˜¯æ¼”ç¤ºæ‰€ç”¨è¾“å…¥æ•°æ®ã€‚  
+ 5.demo.txtÖÐÊÇÑÝÊ¾ËùÓÃÊäÈëÊý¾Ý¡£  
+ 
+ ÊÔÓÃ¾ÙÀý£º
+ 1.´ò¿ª¹¤³ÌÏÂµÄdemo.txtÎÄ¼þ£¬ÀïÃæ´æ·ÅÁË´ý¼ì²âµÄÎÄ±¾Êý¾Ý£¬¿ÉÒÔ×ÔÓÉÌí¼Ó
+ 2.¿ÉÒÔ¸ù¾ÝÐèÒªÌí¼Ó»òÐÞ¸ÄrulesÎÄ¼þ¼ÐÏÂ.slotÎÄ¼þºÍ.intentÎÄ¼þ,½øÐÐ¹æÔòµÄÌí¼ÓºÍ¸Ä¶¯
+ 3.±àÒëÔËÐÐ£¬¼´¿ÉÔÙoutput.txtÖÐ¿´µ½Êä³öÄÚÈÝ
+ 
+ ¾Ù¸öÀý×Ó£º
+ example.slot
+	line 1: Î¸	:body
+	line 2: ÌÛ	:feel
+	line 3: Èý¾ÅÎ¸Ì©	:medicine
+	
+ example.intent
+	line 1: :body	:feel	::Symptom
+	line 2:	:medicine	::Take
+ 
+ Input plain text:
+	ÎÒµÄÎ¸ºÃÌÛ£¬¸Ã³ÔÐ©Ê²Ã´Ò©£¬Èý¾ÅÎ¸Ì©ÄÜÁ¢¼´Ö¹ÌÛÂð£¿
+
+ Slot classification result:
+	Î¸:body ÌÛ:feel Èý¾ÅÎ¸Ì©:medicine ÌÛ:feel
+	
+ Intent classification result:
+	::Symptom ::Take
+	
+ Output:
+	::Symptom Î¸:body ÌÛ:feel ::Take Èý¾ÅÎ¸Ì©:medicine
  
  ![trie set tree](image/trie_set_tree.png)  

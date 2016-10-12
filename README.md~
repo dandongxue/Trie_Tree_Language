@@ -1,0 +1,33 @@
+# SimpleClassify
+
+## 总体设计
+  结合字典树（Trie Tree）与集合（Set）数据结构（见下图），工程中共建立两棵树：Slot树和Intent树 ，待检测文本先通过Slot树匹配出关键字和Slot（例如 胃:body），然后再通过Intent树匹配出Intent部分（例如 ::Symptom  胃:body 痛:feel）
+### 规则定义  
+  规则定义目前使用简单的文本格式来定义规则
+  Slot规则举例如下：
+   胃	：body	
+   嘴巴	：body
+   痛	：feel
+  Intent规则举例如下：
+   :body :feel ::Symptom
+   :body :disease ::Illness
+### 规则导入  
+ 1.Slot规则导入：存储完每个slot字符串（例如：感冒）后，在最后一个节点的位置指明对应的slot名字（例如： :disease）  
+ 2.Intent规则导入：则是在存储完每一个对应规则顺序之后（例如： :body :feel），在最后一个节点位置指明对应的intent名字，例如： ::Symptom
+### 规则使用
+ 
+  
+ 从文件读入并存储这些规则之后，对输入的待检测文本进行搜索匹配即可。  
+   
+ 工程共三个文件：  
+ 1.main.cc :主文件  
+ 2.trie_set_tree.cc :类的实现文件  
+ 3.trie_set_tree.h :类的头文件  
+ 4.规则文件在rules目录下（ .slot 与 .intent 文件均为文本文件，后缀用于区分）
+
+   - xxx.slot 文件用作Slot字典树的输入数据，用以构建整棵Slot树。
+   - xxx.intent 同理，用以构建整棵Intent树。
+
+ 5.demo.txt中是演示所用输入数据。  
+ 
+ ![trie set tree](image/trie_set_tree.png)  
